@@ -26,23 +26,23 @@ public class Journal {
     /**************************************************************
      * RUN
      *************************************************************/
-    public void run() throws Exception{
+    public void run() throws Exception {
         FileService f = new FileService();
-        String propertyFile = "C:/Users/mormon/Documents/NetBeansProjects/Journal/src/resourcesjournal.properties";
+        String propertyFile = "/resources/journal.properties";
         String file = "c:/burtonJournal.xml";
-        String termFile = f.getProperties("terms", file);
-        String bookFile = f.getProperties("books", file); 
+        String termFile = f.getProperties("terms", propertyFile);
+        String bookFile = f.getProperties("books", propertyFile); 
         
-        Map<String, List<String>> bookList = f.readBook(bookFile);
+        Map<String, List<String>> bookList  = f.readBook(bookFile);
         Map<String, List<String>> topicList = f.readTopic(termFile);
         
         List<Entry> list = f.readXML(file);
         
-        //Map<String, List<String>> scripDate = f.bookWithDates(list);
-        //Map<String, List<String>> topicDate = f.bookWithDates(list);
+        Map<String, List<String>> scripDate = f.bookWithDates(list);
+        Map<String, List<String>> topicDate = f.topicWithDates(list);
         
-        //displayInfo(scripDate, "Scripture References:");
-        //displayInfo(topicDate, "\nTopic References:");
+        displayInfo(scripDate, "Scripture References:");
+        displayInfo(topicDate, "\nTopic References:");
     }
     
     /**

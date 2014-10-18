@@ -31,8 +31,10 @@ public class FileService {
      * This will allow the XML file to be parsed in order to pull the information
      * needed to display.
     *************************************************************************/
-    public List<Entry> readXML(String file) throws Exception {
+    public List<Entry> readXML(String file) {
         List<Entry> entryList = new ArrayList<>();
+        
+        System.out.println("Loading file: \"" + file + "\"\n");
         
         try {
             File xmlFile = new File(file);
@@ -63,6 +65,8 @@ public class FileService {
             propVal = prop.getProperty(value);
         }
         catch (Exception ex) {
+            System.out.println("Could not load properties file " + file);
+            //ex.printStackTrace();
         }
         
         return propVal;
@@ -98,7 +102,7 @@ public class FileService {
                         scrip = childElement.getAttribute("book");
                             
                         if (childElement.hasAttribute("chapter")) {
-                            scrip = scrip + "" + childElement.getAttribute("chapter");
+                            scrip = scrip + " " + childElement.getAttribute("chapter");
                         }
                         if (childElement.hasAttribute("startverse")) {
                             scrip = scrip + ":" + childElement.getAttribute("startverse");
@@ -132,7 +136,7 @@ public class FileService {
         
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
-            System.out.println("I made it here!");
+            
             String line;
             
             while ((line = reader.readLine()) != null) {
@@ -181,8 +185,10 @@ public class FileService {
                 list.addAll(Arrays.asList(terms));
                 topic.put(key, list);
             }
+            reader.close();
         }
         catch (Exception e) {
+            e.printStackTrace();
         }
         return topic;
     }

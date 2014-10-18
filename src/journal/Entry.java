@@ -13,12 +13,25 @@ import java.util.List;
  */
 public class Entry {
     private String date;
-    private List<String> cont;
+    private String cont;
     private List<String> scrip;
     private List<String> topic;
 
     Entry(String date, String content, List<String> scriptures, List<String> topic) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (scrip == null) {
+                throw new Exception();
+            }
+        }
+        catch (Exception e) {
+            //System.out.println("Content: " + content);
+            //e.printStackTrace();
+        }
+        this.date = date;
+        this.cont = content;
+        this.scrip = scriptures;
+        this.topic = topic;
+        
     }
     
     public void setScripture(List<String> scriptures) {
@@ -29,7 +42,7 @@ public class Entry {
         date = dates;
     }
     
-    public void setContent(List<String> content) {
+    public void setContent(String content) {
         cont = content;
     }
     
@@ -41,7 +54,7 @@ public class Entry {
         return date;
     }
     
-    public List<String> getContent() {
+    public String getContent() {
         return cont;
     }
     
