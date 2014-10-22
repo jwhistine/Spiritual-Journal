@@ -8,7 +8,6 @@ package journal;
 import java.util.List;
 
 /**
- *
  * @author mormon
  */
 public class Entry {
@@ -18,20 +17,10 @@ public class Entry {
     private List<String> topic;
 
     Entry(String date, String content, List<String> scriptures, List<String> topic) {
-        try {
-            if (scrip == null) {
-                throw new Exception();
-            }
-        }
-        catch (Exception e) {
-            //System.out.println("Content: " + content);
-            //e.printStackTrace();
-        }
         this.date = date;
         this.cont = content;
         this.scrip = scriptures;
         this.topic = topic;
-        
     }
     
     public void setScripture(List<String> scriptures) {
@@ -64,5 +53,13 @@ public class Entry {
    
     public List<String> getTopic(){
         return topic;
+    }
+    
+    public void addScrip(String scripture) {
+        scrip.add(scripture);
+    }
+    
+    public void addTopic(String topics) {
+        topic.add(topics);
     }
 }

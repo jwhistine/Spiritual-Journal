@@ -16,38 +16,46 @@ public class Journal {
     private List <Topic> topic;
     private List <Entry> entries;
     
-    /**
-     * @param args the command line arguments
-     */
+    /*********************************************************
+     * MAIN
+     * Just calls the run function
+     ********************************************************/
     public static void main(String[] args) throws Exception{
         new Journal().run();
     }
     
     /**************************************************************
      * RUN
+     * This will call all of the necessary functions to make this 
+     * program work.
      *************************************************************/
     public void run() throws Exception {
         FileService f = new FileService();
         String propertyFile = "/resources/journal.properties";
-        String file = "c:/burtonJournal.xml";
         String termFile = f.getProperties("terms", propertyFile);
-        String bookFile = f.getProperties("books", propertyFile); 
+        String bookFile = f.getProperties("books", propertyFile);
+        String inFile = "c:/journal.txt";
+        String outFile = "c:/journalOutput.txt";
+        String xmlOut = "c:/xmlOutput.txt";
+        
         
         Map<String, List<String>> bookList  = f.readBook(bookFile);
         Map<String, List<String>> topicList = f.readTopic(termFile);
         
-        List<Entry> list = f.readXML(file);
+        entries = f.fileProcess(inFile, bookList, topicList);
         
-        Map<String, List<String>> scripDate = f.bookWithDates(list);
-        Map<String, List<String>> topicDate = f.topicWithDates(list);
-        
-        displayInfo(scripDate, "Scripture References:");
-        displayInfo(topicDate, "\nTopic References:");
+        try {
+            f.buildXML(entries, xmlOut);
+            f.writeFile(entries, outFile);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
-    /**
-     * @param entry 
-     **/
+    /**********************************************************************
+     * This is the display for Milestone 3A
+     *********************************************************************/
     void display(List<Entry> entry) { 
         for (Entry e : entry) {
             System.out.println("Entry: ");
@@ -56,9 +64,9 @@ public class Journal {
         }
     }
     
-    /**
-     * 
-     **/
+    /*************************************************************************
+     * This is the display for Milestone 3B
+     ************************************************************************/
     public void displayInfo(Map<String, List<String>> map, String head) {
         System.out.println(head);
         
